@@ -1,205 +1,346 @@
 # 🩺 Healthcare AI Chatbot
 
-A production-quality, educational Healthcare AI Chatbot built with FastAPI,
-Streamlit, Gemini 2.5 Flash, and a local Retrieval-Augmented Generation (RAG)
-pipeline over FAISS.
+> **Production-grade AI-powered Healthcare Assistant built with FastAPI, Streamlit, Gemini 2.5 Flash, and Retrieval-Augmented Generation (RAG).**
 
-The assistant answers general questions about symptoms, diseases, nutrition,
-healthy lifestyle, preventive healthcare, and first aid — strictly for
-**educational purposes**. It never diagnoses conditions, never prescribes
-medication, and always encourages consulting a licensed professional. It
-also detects potential medical emergencies and responds with emergency
-guidance instead of a normal answer.
+<p align="center">
 
-> ⚠️ **This project is for educational/demo purposes only and is not a
-> medical device or a substitute for professional healthcare.**
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-2.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![FAISS](https://img.shields.io/badge/FAISS-Vector_Search-orange?style=for-the-badge)
+![RAG](https://img.shields.io/badge/RAG-Retrieval_Augmented_Generation-success?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
----
-
-## Features
-
-**Core**
-- Real-time chat interface with streaming responses
-- Persistent per-session chat history and "New Chat" reset
-- Markdown-rendered responses
-- Loading / typing indicator
-- Centralized error handling and structured logging
-
-**AI**
-- Prompt-engineered system prompt (never diagnoses, never prescribes)
-- Short-term conversation memory per session
-- Retrieval-Augmented Generation (RAG) over a local PDF knowledge base
-- Semantic search via BAAI/bge-small-en-v1.5 embeddings + FAISS
-- Source citation (document name, page, relevance score) in every answer
-- Context-grounded responses to reduce hallucination
-
-**Safety**
-- Emergency detection guardrail (chest pain, stroke, severe bleeding,
-  poisoning, difficulty breathing, etc.) that overrides normal answering
-  with urgent guidance to seek immediate care
-- Post-response guardrail reinforcement if risky diagnostic/prescriptive
-  language is detected in the model's output
-- Medical disclaimer shown throughout the UI
+</p>
 
 ---
 
-## Architecture
+# 📖 Table of Contents
 
-```
-User
-  ↓
-Streamlit (frontend/streamlit_app.py)
-  ↓  HTTP (stream / JSON)
-FastAPI (backend/api.py)
-  ↓
-Guardrails (backend/guardrails.py)   — emergency & risk detection
-  ↓
-Conversation Memory (backend/memory.py)  — rolling per-session history
-  ↓
-Retriever / FAISS (backend/rag.py)   — top-k semantic search
-  ↓
-Prompt Builder (backend/prompts.py)  — system prompt + context + memory
-  ↓
-Gemini 2.5 Flash (backend/llm.py)
-  ↓
-Response (+ sources + disclaimer) → Streamlit
-```
-
-See [`docs/Architecture.md`](docs/Architecture.md) and
-[`docs/Logic.md`](docs/Logic.md) for a detailed breakdown of each stage.
+- [Overview](#-overview)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Environment Variables](#-environment-variables)
+- [Running the Project](#-running-the-project)
+- [RAG Pipeline](#-rag-pipeline)
+- [Future Improvements](#-future-improvements)
+- [Disclaimer](#-medical-disclaimer)
+- [Author](#-author)
 
 ---
 
-## Project Structure
+# 📌 Overview
 
+Healthcare AI Chatbot is a **production-ready Retrieval-Augmented Generation (RAG)** application built using **FastAPI**, **Streamlit**, **Gemini 2.5 Flash**, and **FAISS**.
+
+The chatbot provides educational healthcare information while ensuring responses remain safe through multiple guardrails.
+
+### Topics Supported
+
+- 🩺 Symptoms
+- 💊 Diseases
+- 🥗 Nutrition
+- ❤️ Preventive Healthcare
+- 🚑 First Aid
+- 🧘 Healthy Lifestyle
+
+> ⚠️ **This project is intended only for educational purposes and is not a substitute for professional medical advice.**
+
+---
+
+# ✨ Features
+
+## 🤖 AI Features
+
+- 🧠 Gemini 2.5 Flash LLM
+- 📚 Retrieval-Augmented Generation (RAG)
+- 🔍 Semantic Search
+- 📄 PDF Knowledge Base
+- 💬 Multi-turn Conversation Memory
+- 📑 Source Citation
+- ⚡ Streaming Responses
+- 📖 Context-aware Answers
+
+---
+
+## 🛡 Safety Features
+
+- 🚨 Emergency Detection
+- ❌ No Disease Diagnosis
+- ❌ No Medication Prescription
+- ⚠️ Medical Disclaimer
+- 🩺 Healthcare Safety Guardrails
+
+---
+
+## 🎨 UI Features
+
+- 💬 Streamlit Chat Interface
+- ⚡ Real-time Streaming
+- 🆕 New Chat
+- 📜 Chat History
+- 📊 Structured Logging
+
+---
+
+# 🏗 Architecture
+
+```text
+                   User
+                     │
+                     ▼
+        🎨 Streamlit Frontend
+                     │
+              HTTP Streaming
+                     │
+                     ▼
+          ⚡ FastAPI Backend
+                     │
+     ┌───────────────┼───────────────┐
+     ▼               ▼               ▼
+ Guardrails      Conversation      RAG
+                  Memory         Retrieval
+                     │
+                     ▼
+           Prompt Construction
+                     │
+                     ▼
+          Gemini 2.5 Flash LLM
+                     │
+                     ▼
+      Safe Response + Citations
 ```
-healthcare-ai/
+
+---
+
+# 🧰 Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Language | Python 3.11 |
+| Backend | FastAPI |
+| Frontend | Streamlit |
+| LLM | Gemini 2.5 Flash |
+| Embeddings | BAAI/bge-small-en-v1.5 |
+| Vector Search | FAISS |
+| PDF Loader | PyMuPDF |
+| ML | Sentence Transformers |
+
+---
+
+# 📂 Project Structure
+
+```text
+Healthcare-RAG-Chatbot/
+│
 ├── backend/
-│   ├── api.py            # FastAPI app & endpoints
-│   ├── config.py         # Centralized settings (env-driven)
-│   ├── llm.py             # Gemini 2.5 Flash client (sync + streaming)
-│   ├── prompts.py         # System prompt & prompt assembly
-│   ├── rag.py             # PDF loading, chunking, FAISS index, retrieval
-│   ├── guardrails.py      # Emergency detection & safety checks
-│   ├── memory.py          # Rolling conversation memory
-│   ├── embeddings.py      # BGE embedding model wrapper
-│   └── utils.py           # Logging & text helpers
+│   ├── api.py
+│   ├── config.py
+│   ├── embeddings.py
+│   ├── guardrails.py
+│   ├── llm.py
+│   ├── memory.py
+│   ├── prompts.py
+│   ├── rag.py
+│   └── utils.py
+│
 ├── frontend/
-│   └── streamlit_app.py   # Streamlit chat UI
-├── data/
-│   ├── docs/               # Source PDFs for the knowledge base
-│   └── vectorstore/        # Persisted FAISS index + metadata
+│   └── streamlit_app.py
+│
 ├── docs/
 │   ├── Architecture.md
 │   └── Logic.md
-├── README.md
-├── requirements.txt
+│
+├── data/
+│   ├── docs/
+│   └── vectorstore/
+│
 ├── .env.example
-└── run.py                  # Launches backend + frontend together
+├── requirements.txt
+├── run.py
+└── README.md
 ```
 
 ---
 
-## Installation
+# 🚀 Installation
 
-1.**Extract the Project and Create a Virtual Environment**
+## 1️⃣ Clone Repository
 
-  
 ```bash
-cd healthcare-ai
+git clone https://github.com/devanshnegi88/Healthcare-RAG-Chatbot.git
+
+cd Healthcare-RAG-Chatbot
 ```
 
+---
 
-   ```bash
-   py -3.11 -m venv .venv
-   .venv\Scripts\activate   
-   ```
+## 2️⃣ Create Virtual Environment
 
-2. **Install dependencies:**
+### Windows
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+```
 
-3. **Configure environment variables:**
+### Linux / macOS
 
-   ```bash
-   cp .env.example .env
-   ```
-
-   Then edit `.env` and set `GEMINI_API_KEY` to your Google AI Studio /
-   Gemini API key.
-
-4. A sample knowledge-base PDF (`data/docs/general_health_education.pdf`)
-   is included so the RAG pipeline works out of the box. Add your own PDFs
-   to `data/docs/` (or upload them from the Streamlit sidebar) to extend it.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
 ---
 
-## Environment Variables
+## 3️⃣ Install Dependencies
 
-| Variable | Description | Default |
-|---|---|---|
-| `GEMINI_API_KEY` | Your Gemini API key | *(required)* |
-| `GEMINI_MODEL` | Gemini model name | `gemini-2.5-flash` |
-| `LLM_TEMPERATURE` | Sampling temperature | `0.3` |
-| `LLM_MAX_OUTPUT_TOKENS` | Max tokens per response | `1024` |
-| `EMBEDDING_MODEL_NAME` | Sentence-embedding model | `BAAI/bge-small-en-v1.5` |
-| `CHUNK_SIZE` | Character size of text chunks | `800` |
-| `CHUNK_OVERLAP` | Overlap between chunks | `120` |
-| `TOP_K` | Chunks retrieved per query | `5` |
-| `MAX_MEMORY_TURNS` | Conversation turns kept in memory | `6` |
-| `API_HOST` / `API_PORT` | FastAPI bind address | `0.0.0.0` / `8000` |
-| `FRONTEND_PORT` | Streamlit port | `8501` |
-| `LOG_LEVEL` | Logging verbosity | `INFO` |
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## Running the Project
+## 4️⃣ Configure Environment Variables
 
-### Option A — one command (recommended)
+Copy the example file
+
+```bash
+cp .env.example .env
+```
+
+Update
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+---
+
+# ⚙ Environment Variables
+
+| Variable | Description |
+|-----------|-------------|
+| GEMINI_API_KEY | Gemini API Key |
+| GEMINI_MODEL | Gemini Model |
+| EMBEDDING_MODEL_NAME | Embedding Model |
+| CHUNK_SIZE | Chunk Size |
+| CHUNK_OVERLAP | Chunk Overlap |
+| TOP_K | Retrieved Chunks |
+| MAX_MEMORY_TURNS | Conversation Memory |
+| API_PORT | FastAPI Port |
+| FRONTEND_PORT | Streamlit Port |
+
+---
+
+# ▶ Running the Project
+
+## Recommended
 
 ```bash
 python run.py
 ```
 
-This starts the FastAPI backend and the Streamlit frontend together, and
-builds the FAISS index automatically on first run.
+---
 
-### Option B — run each service manually
+## Manual
 
-**Backend:**
+### Backend
+
 ```bash
-uvicorn backend.api:app --host 0.0.0.0 --port 8000 --reload
+uvicorn backend.api:app --reload
 ```
 
-**Frontend** (in a second terminal):
+### Frontend
+
 ```bash
 streamlit run frontend/streamlit_app.py
 ```
 
-Then open the Streamlit URL printed in the terminal (typically
-`http://localhost:8501`).
+---
+
+# 🔍 RAG Pipeline
+
+```text
+User Query
+     │
+     ▼
+Conversation Memory
+     │
+     ▼
+Embedding Generation
+     │
+     ▼
+FAISS Similarity Search
+     │
+     ▼
+Relevant Documents
+     │
+     ▼
+Prompt Builder
+     │
+     ▼
+Gemini 2.5 Flash
+     │
+     ▼
+Safe Response + Citations
+```
 
 ---
 
-## Future Improvements
+# 📈 Future Improvements
 
-- Persist conversation memory in Redis/Postgres for multi-instance deployments
-- Add user authentication and per-user chat history
-- Add hybrid search (BM25 + dense embeddings) for improved retrieval
-- Add automated evaluation harness for hallucination/safety regression testing
-- Add multilingual support
-- Containerize with Docker Compose (backend + frontend + vector store volume)
+- 🔐 Authentication
+- 💾 Persistent Chat History
+- 🌍 Multilingual Support
+- 🔍 Hybrid Search (BM25 + Dense)
+- 🐳 Docker Deployment
+- ☁ Cloud Deployment
+- 📊 Evaluation Dashboard
+- 📱 Responsive UI
 
 ---
 
-## Disclaimer
+# 📚 Documentation
 
-This chatbot provides **general educational information only**. It is
-**not** a medical device, does **not** diagnose conditions, and does
-**not** prescribe treatment. Always consult a qualified healthcare
-professional for medical concerns, and call emergency services immediately
-in a medical emergency.
-# Healthcare-RAG-Chatbot
+Additional documentation:
 
+- 📄 docs/Architecture.md
+- 📄 docs/Logic.md
+
+---
+
+# ⚠ Medical Disclaimer
+
+This project provides **general educational healthcare information only**.
+
+It **does not diagnose diseases**.
+
+It **does not prescribe medications**.
+
+Always consult a licensed healthcare professional for medical concerns.
+
+If you believe you are experiencing a medical emergency, contact your local emergency services immediately.
+
+---
+
+# 👨‍💻 Author
+
+**Devansh Negi**
+
+Backend & AI Engineer
+
+- 💼 LinkedIn: https://linkedin.com/in/devansh-negi005
+- 💻 GitHub: https://github.com/devanshnegi88
+
+---
+
+# ⭐ Support
+
+If you found this project helpful, please consider giving it a **⭐ Star** on GitHub.
+
+Contributions, suggestions, and feedback are always welcome.
