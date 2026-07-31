@@ -1,0 +1,31 @@
+# Version ranges (rather than exact pins) are used so `pip install` can
+# resolve compatible wheels across Python versions, instead of failing when
+# an exact pinned version has no wheel for the interpreter in use.
+#
+# Tested against Python 3.9 - 3.12. Python 3.13 support depends on whether
+# `torch` (a transitive dependency of sentence-transformers) has published
+# wheels for it yet at install time -- if `pip install` fails on 3.13, either
+# upgrade pip/setuptools first, or use Python 3.11/3.12 for the ML stack.
+
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29,<1.0
+pydantic>=2.6,<3.0
+python-dotenv>=1.0,<2.0
+
+streamlit>=1.33,<2.0
+requests>=2.31,<3.0
+
+google-generativeai>=0.7,<1.0
+
+langchain>=0.3,<0.4
+langchain-community>=0.3,<0.4
+langchain-core>=0.3,<0.4
+langchain-text-splitters>=0.3,<0.4
+
+sentence-transformers>=3.0,<4.0
+faiss-cpu>=1.8,<2.0
+numpy>=1.24,<2.0
+
+PyMuPDF>=1.23,<2.0
+
+python-multipart>=0.0.9,<0.1
