@@ -16,23 +16,6 @@
 
 ---
 
-# 📖 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [Environment Variables](#-environment-variables)
-- [Running the Project](#-running-the-project)
-- [RAG Pipeline](#-rag-pipeline)
-- [Future Improvements](#-future-improvements)
-- [Disclaimer](#-medical-disclaimer)
-- [Author](#-author)
-
----
-
 # 📌 Overview
 
 Healthcare AI Chatbot is a **production-ready Retrieval-Augmented Generation (RAG)** application built using **FastAPI**, **Streamlit**, **Gemini 2.5 Flash**, and **FAISS**.
@@ -84,6 +67,15 @@ The chatbot provides educational healthcare information while ensuring responses
 - 🆕 New Chat
 - 📜 Chat History
 - 📊 Structured Logging
+
+---
+
+# Screenshots
+
+<img width="1600" height="757" alt="Image" src="https://github.com/user-attachments/assets/81d1c980-a648-4f84-81b9-57d5e54a4d6d" />
+<img width="1600" height="757" alt="Image" src="https://github.com/user-attachments/assets/d86f080d-acc0-4fc9-b880-f94fe5cae062" />
+<img width="1600" height="756" alt="Image" src="https://github.com/user-attachments/assets/3f0b7203-6dff-40a7-b532-5c66740409a0" />
+<img width="1600" height="769" alt="Image" src="https://github.com/user-attachments/assets/68adb252-86fa-4f00-b6e2-f1dae5ab79cf" />
 
 ---
 
