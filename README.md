@@ -81,31 +81,7 @@ The chatbot provides educational healthcare information while ensuring responses
 
 # 🏗 Architecture
 
-```text
-                   User
-                     │
-                     ▼
-        🎨 Streamlit Frontend
-                     │
-              HTTP Streaming
-                     │
-                     ▼
-          ⚡ FastAPI Backend
-                     │
-     ┌───────────────┼───────────────┐
-     ▼               ▼               ▼
- Guardrails      Conversation      RAG
-                  Memory         Retrieval
-                     │
-                     ▼
-           Prompt Construction
-                     │
-                     ▼
-          Gemini 2.5 Flash LLM
-                     │
-                     ▼
-      Safe Response + Citations
-```
+<img width="1024" height="1536" alt="Image" src="https://github.com/user-attachments/assets/775622db-a5f8-4b23-85cb-ca78c287a9de" />
 
 ---
 
